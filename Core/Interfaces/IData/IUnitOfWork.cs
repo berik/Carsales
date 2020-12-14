@@ -5,7 +5,7 @@ namespace Core.Interfaces.IData
 {
     public interface IUnitOfWork : IDisposable
     {
-        //IGameRepository GameRepository { get; }
+        ICarRepository CarRepository { get; }
 
         /// <summary>
         /// Commit ACID

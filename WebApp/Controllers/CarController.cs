@@ -21,15 +21,17 @@ namespace WebApp.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICurrentUserService _currentUserService;
         private readonly ICarService _carService;
+        private readonly IStorageService _storageService;
 
         public CarController(ILogger<CarController> logger, IMapper mapper, IUnitOfWork unitOfWork,
-            ICurrentUserService currentUserService, ICarService carService)
+            ICurrentUserService currentUserService, ICarService carService, IStorageService storageService)
         {
             _logger = logger;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _currentUserService = currentUserService;
             _carService = carService;
+            _storageService = storageService;
         }
 
         [HttpGet]
@@ -70,7 +72,14 @@ namespace WebApp.Controllers
             {
                 _logger.LogInformation($"Create new car ad by userID: {_currentUserService.UserId}");
                 var newCar = _mapper.Map<Car>(dto);
-                var result = await _carService.AddCar(newCar, _currentUserService.UserId, dto.Image);
+                
+                if (dto.Image != null)
+                {
+                    var imageResult = await _storageService.UploadImageToStorage(_currentUserService.UserId, dto.Image);
+                    if (imageResult != null) newCar.Image = imageResult.Name;
+                }
+
+                var result = await _carService.AddCar(newCar, _currentUserService.UserId);
                 if (result != null)
                     return CreatedAtAction(nameof(Get), new {carId = result.Id},
                         _mapper.Map<CarDto>(result));

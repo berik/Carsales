@@ -53,6 +53,7 @@ namespace WebApp
             
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IStorageService, StorageService>();
 
             // Auto Mapper Configurations
             services.AddAutoMapper(typeof(MappingProfile));

@@ -9,40 +9,9 @@
 
   <div class="mb-3">
     <div class="row">
-      <div class="col-sm-6 col-md-4 d-flex mb-3" *ngFor="let car of cars">
+      <div class="col-sm-12 col-md-6 d-flex mb-3" *ngFor="let car of cars">
         <app-car-card [car]="car"></app-car-card>
       </div>
     </div>
-
-    <!-- <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Make</th>
-          <th scope="col">Model</th>
-          <th scope="col">Body Type</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let car of cars">
-          <td>{{ car.make }}</td>
-          <td>
-            {{ car.model }}
-          </td>
-          <td>
-            {{ getBodyType(car.carBodyType) }}
-          </td>
-          <td>
-            <a
-              type="button"
-              class="btn btn-success mr-1"
-              [routerLink]="['/car', car.id]"
-            >
-              View
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
   </div>
 </div>

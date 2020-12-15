@@ -20,6 +20,11 @@ namespace Core.Entities
         public string Model { get; set; }
         
         /// <summary>
+        /// Image of the vehicle
+        /// </summary>
+        public string Image { get; set; }
+        
+        /// <summary>
         /// Vehicle type
         /// </summary>
         public VehicleType VehicleType { get; set; }

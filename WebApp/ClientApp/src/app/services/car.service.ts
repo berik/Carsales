@@ -22,6 +22,16 @@ export class CarService {
   }
 
   addCar(newCar: NewCarDto): Observable<CarDto> {
-    return this.http.post<CarDto>(`${this.baseApiUrl}/AddCar`, newCar);
+    const formData: FormData = new FormData();
+    formData.append("make", newCar.make);
+    formData.append("model", newCar.model);
+    formData.append("engine", newCar.engine);
+    formData.append("price", newCar.price);
+    formData.append("numberOfDoors", newCar.numberOfDoors.toString());
+    formData.append("numberOfWheels", newCar.numberOfWheels.toString());
+    formData.append("price", newCar.price);
+    formData.append("image", newCar.imageUri);
+    formData.append("carBodyType", newCar.carBodyType.toString());
+    return this.http.post<CarDto>(`${this.baseApiUrl}/AddCar`, formData);
   }
 }

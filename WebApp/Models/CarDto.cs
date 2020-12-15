@@ -1,5 +1,6 @@
 using System;
 using Core.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Models
 {
@@ -14,6 +15,7 @@ namespace WebApp.Models
         public string Engine { get; set; }
         public int NumberOfDoors { get; set; }
         public int NumberOfWheels { get; set; }
+        public string Image { get; set; }
         public CarBodyType CarBodyType { get; set; }    
     }
 
@@ -25,6 +27,7 @@ namespace WebApp.Models
         public string Price { get; set; }
         public int NumberOfDoors { get; set; }
         public int NumberOfWheels { get; set; }
+        public IFormFile Image { get; set; }
         public CarBodyType CarBodyType { get; set; }   
     }
 }

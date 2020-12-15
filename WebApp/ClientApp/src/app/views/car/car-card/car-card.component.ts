@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CarDto } from "src/app/models/CarDto";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-car-card",
@@ -11,4 +12,11 @@ export class CarCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  getImage(imageUri: string) {
+    if (imageUri) {
+      return `${environment.imageStorageUri}/${imageUri}`;
+    }
+    return "";
+  }
 }

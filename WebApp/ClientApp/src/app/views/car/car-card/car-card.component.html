@@ -1,8 +1,12 @@
-<div class="card embed-responsive embed-responsive-16by9" style="width: 18rem">
-  <img src="..." class="card-img-top" alt="..." />
+<div class="card flex-fill">
+  <img
+    class="card-img-top embed-responsive embed-responsive-16by9"
+    *ngIf="car.image"
+    [src]="getImage(car.image)"
+  />
   <div class="card-body">
     <h5 class="card-title">{{ car.make }} {{ car.model }}</h5>
     <p class="card-text">${{ car.price }}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a [routerLink]="['car', car.id]" class="btn btn-primary">Details</a>
   </div>
 </div>

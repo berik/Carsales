@@ -8,6 +8,7 @@ export interface CarDto {
   model: string;
   price: number;
   engine: string;
+  image: string;
   numberOfDoors: number;
   numberOfWheels: number;
   vehicleType: VehicleType;

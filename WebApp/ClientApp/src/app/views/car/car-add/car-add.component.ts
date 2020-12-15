@@ -95,7 +95,6 @@ export class CarAddComponent implements OnInit {
 
   onSubmit() {
     this.submitting = true;
-
     this.carService.addCar(this.model).subscribe(() => {
       this.submitting = false;
       this.router.navigate(["/car"]);

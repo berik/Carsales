@@ -64,13 +64,13 @@ namespace WebApp.Controllers
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddCar([FromBody] NewCarDto dto)
+        public async Task<IActionResult> AddCar([FromForm] NewCarDto dto)
         {
             try
             {
                 _logger.LogInformation($"Create new car ad by userID: {_currentUserService.UserId}");
                 var newCar = _mapper.Map<Car>(dto);
-                var result = await _carService.AddCar(newCar, _currentUserService.UserId);
+                var result = await _carService.AddCar(newCar, _currentUserService.UserId, dto.Image);
                 if (result != null)
                     return CreatedAtAction(nameof(Get), new {carId = result.Id},
                         _mapper.Map<CarDto>(result));

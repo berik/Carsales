@@ -15,4 +15,14 @@ namespace WebApp.Models
         public int NumberOfWheels { get; set; }
         public CarBodyType CarBodyType { get; set; }    
     }
+
+    public class NewCarDto
+    {
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Engine { get; set; }
+        public int NumberOfDoors { get; set; }
+        public int NumberOfWheels { get; set; }
+        public CarBodyType CarBodyType { get; set; }   
+    }
 }

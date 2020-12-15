@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class InitDataModel : Migration
+    public partial class InitModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -201,12 +201,8 @@ namespace Infrastructure.Migrations
                     Make = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VehicleType = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
                     OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Engine = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberOfDoors = table.Column<int>(type: "int", nullable: true),
-                    NumberOfWheels = table.Column<int>(type: "int", nullable: true),
-                    CarBodyType = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -223,20 +219,70 @@ namespace Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Boats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    LengthInMeter = table.Column<double>(type: "float", nullable: false),
+                    NumberOfBerths = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Boats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Boats_Vehicle_Id",
+                        column: x => x.Id,
+                        principalTable: "Vehicle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Engine = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumberOfDoors = table.Column<int>(type: "int", nullable: false),
+                    NumberOfWheels = table.Column<int>(type: "int", nullable: false),
+                    CarBodyType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cars_Vehicle_Id",
+                        column: x => x.Id,
+                        principalTable: "Vehicle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", 0, "c5c59a02-663b-4a45-b9dc-4d243589fb25", "berik.assylbekov@gmail.com", true, false, null, null, "BERIK.ASSYLBEKOV@GMAIL.COM", "BERIK.ASSYLBEKOV@GMAIL.COM", "AQAAAAEAACcQAAAAEOK6gdEst6JKyt2GGgvBhzd29G41KdYufXQ82U3kAKrzSWms5IuMR6pPhybwlBYwJQ==", null, false, "65663bcf-ba1e-4f12-b251-6f23da810ba5", false, "berik.assylbekov@gmail.com" });
+                values: new object[] { "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", 0, "6c0f4400-275a-421b-9f5a-12148aed7cbb", "berik.assylbekov@gmail.com", true, false, null, null, "BERIK.ASSYLBEKOV@GMAIL.COM", "BERIK.ASSYLBEKOV@GMAIL.COM", "AQAAAAEAACcQAAAAEP0GjLchekS01t6tJnE+G42ydBSrnu6bMbn6Hfg5VkCJ/VqhTeLKB6WsuSWjWlfYDg==", null, false, "7381c1b9-402b-40dc-8f32-c930ef138f60", false, "berik.assylbekov@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Vehicle",
-                columns: new[] { "Id", "CarBodyType", "Created", "CreatedBy", "Discriminator", "Engine", "LastModified", "LastModifiedBy", "Make", "Model", "NumberOfDoors", "NumberOfWheels", "OwnerId", "VehicleType" },
-                values: new object[] { 1, 1, new DateTime(2020, 12, 14, 17, 33, 43, 695, DateTimeKind.Local).AddTicks(9190), null, "Car", "c91dec43-bb4f-45b0-9bed-546f26845768", null, null, "BMW", "M5", 5, 4, "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", 0 });
+                columns: new[] { "Id", "Created", "CreatedBy", "LastModified", "LastModifiedBy", "Make", "Model", "OwnerId", "Price", "VehicleType" },
+                values: new object[] { 1, new DateTime(2020, 12, 15, 17, 13, 20, 578, DateTimeKind.Local).AddTicks(610), "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", null, null, "BMW", "M5", "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", 0m, 0 });
 
             migrationBuilder.InsertData(
                 table: "Vehicle",
-                columns: new[] { "Id", "CarBodyType", "Created", "CreatedBy", "Discriminator", "Engine", "LastModified", "LastModifiedBy", "Make", "Model", "NumberOfDoors", "NumberOfWheels", "OwnerId", "VehicleType" },
-                values: new object[] { 2, 0, new DateTime(2020, 12, 14, 17, 33, 43, 711, DateTimeKind.Local).AddTicks(3010), null, "Car", "2cfa7ea4-1d5a-497e-a806-44c317e8ae4f", null, null, "VW", "Passat", 5, 4, "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", 0 });
+                columns: new[] { "Id", "Created", "CreatedBy", "LastModified", "LastModifiedBy", "Make", "Model", "OwnerId", "Price", "VehicleType" },
+                values: new object[] { 2, new DateTime(2020, 12, 15, 17, 13, 20, 594, DateTimeKind.Local).AddTicks(6870), "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", null, null, "VW", "Passat", "4ab306a9-ff4c-46ca-a6f9-c47383d928d8", 0m, 0 });
+
+            migrationBuilder.InsertData(
+                table: "Cars",
+                columns: new[] { "Id", "CarBodyType", "Engine", "NumberOfDoors", "NumberOfWheels" },
+                values: new object[] { 1, 1, "412091fd-32a2-412e-96e3-8322bd3a7304", 5, 4 });
+
+            migrationBuilder.InsertData(
+                table: "Cars",
+                columns: new[] { "Id", "CarBodyType", "Engine", "NumberOfDoors", "NumberOfWheels" },
+                values: new object[] { 2, 0, "267403fa-b0fd-435d-b958-d587b9d2dbd4", 5, 4 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -327,16 +373,22 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Boats");
+
+            migrationBuilder.DropTable(
+                name: "Cars");
+
+            migrationBuilder.DropTable(
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "Vehicle");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Vehicle");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

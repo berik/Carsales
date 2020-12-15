@@ -12,3 +12,12 @@ export interface CarDto {
   vehicleType: VehicleType;
   carBodyType: CarBodyType;
 }
+
+export interface NewCarDto {
+  make: string;
+  model: string;
+  engine: string;
+  numberOfDoors: number;
+  numberOfWheels: number;
+  carBodyType: CarBodyType;
+}

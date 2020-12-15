@@ -23,6 +23,11 @@ namespace Core.Entities
         /// Vehicle type
         /// </summary>
         public VehicleType VehicleType { get; set; }
+
+        /// <summary>
+        /// Price
+        /// </summary>
+        public decimal Price { get; set; }
         
         /// <summary>
         /// Owner of the vehicle

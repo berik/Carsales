@@ -13,7 +13,7 @@
         <tr>
           <th scope="col">Make</th>
           <th scope="col">Model</th>
-          <th scope="col">Type</th>
+          <th scope="col">Body Type</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -24,7 +24,7 @@
             {{ car.model }}
           </td>
           <td>
-            {{ car.vehicleType }}
+            {{ getBodyType(car.carBodyType) }}
           </td>
           <td>
             <a

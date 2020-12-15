@@ -1,1 +1,71 @@
-<p>car-add works!</p>
+<h4>Add New CAR</h4>
+<div class="mb-3">
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="carMake">Select make</label>
+          <select
+            class="form-control"
+            id="carMake"
+            formControlName="carMake"
+            (change)="onSelectCarMake()"
+          >
+            <option [ngValue]="null" disabled>Choose your Make</option>
+            <option *ngFor="let carMake of carMakes" [ngValue]="carMake">
+              {{ carMake.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group" *ngIf="selectedCarMake">
+          <label for="carModel">Select Model</label>
+          <select
+            class="form-control"
+            id="carModel"
+            formControlName="carModel"
+            (change)="onSelectCarModel()"
+          >
+            <option [ngValue]="null" disabled>Choose your model</option>
+            <option
+              *ngFor="let carModel of selectedCarMake.models"
+              [ngValue]="carModel"
+            >
+              {{ carModel.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group" *ngIf="selectedCarModel">
+          <label for="carBodyType">Select car body type</label>
+          <select
+            class="form-control"
+            id="carBodyType"
+            formControlName="carBodyType"
+            (change)="onSelectCarBodyType()"
+          >
+            <option [ngValue]="null" disabled>Choose your car body type</option>
+            <option
+              *ngFor="let carBodyType of carBodyTypes"
+              [ngValue]="carBodyType.id"
+            >
+              {{ carBodyType.value }}
+            </option>
+          </select>
+        </div>
+        <button
+          [disabled]="
+            !this.model.make || !this.model.model || !this.model.engine
+          "
+          class="btn btn-primary mr-2"
+          type="submit"
+        >
+          Submit
+        </button>
+        <a type="button" class="btn btn-danger" [routerLink]="['/games']"
+          >Cancel</a
+        >
+      </form>
+    </div>
+  </div>
+</div>

@@ -28,6 +28,8 @@ namespace Infrastructure
         }
 
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Boat> Boats { get; set; }
+        
         private const int CarId1 = 1;
         private const int CarId2 = 2;
         private const string UserId = "4ab306a9-ff4c-46ca-a6f9-c47383d928d8";
@@ -73,18 +75,27 @@ namespace Infrastructure
             var ph = new PasswordHasher<ApplicationUser>();
             user.PasswordHash = ph.HashPassword(user, "CCc76511!!");
             modelBuilder.Entity<ApplicationUser>().HasData(user);
+            
+            modelBuilder.Entity<Vehicle>(ConfigureVehicle);
             modelBuilder.Entity<Car>(ConfigureCar);
+            modelBuilder.Entity<Boat>(ConfigureBoat);
         }
-
+        
+        private void ConfigureVehicle(EntityTypeBuilder<Vehicle> modelBuilder)
+        {
+            modelBuilder.Property(a => a.Price).HasColumnType("decimal(5, 2)");
+        }
         private void ConfigureCar(EntityTypeBuilder<Car> modelBuilder)
         {
             // populate initial data
+            modelBuilder.ToTable("Cars");
             modelBuilder.HasData(new List<Car>()
             {
                 new Car()
                 {
                     Id = CarId1,
                     Created = DateTime.Now,
+                    CreatedBy = UserId,
                     Make = "BMW",
                     Model = "M5",
                     VehicleType = VehicleType.Car,
@@ -98,6 +109,7 @@ namespace Infrastructure
                 {
                     Id = CarId2,
                     Created = DateTime.Now,
+                    CreatedBy = UserId,
                     Make = "VW",
                     Model = "Passat",
                     VehicleType = VehicleType.Car,
@@ -108,6 +120,11 @@ namespace Infrastructure
                     CarBodyType = CarBodyType.Hatchback
                 }
             });
+        }
+        
+        private void ConfigureBoat(EntityTypeBuilder<Boat> modelBuilder)
+        {
+            modelBuilder.ToTable("Boats");
         }
     }
 }

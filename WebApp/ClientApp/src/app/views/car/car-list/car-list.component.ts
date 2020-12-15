@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CarDto } from "src/app/models/CarDto";
+import { CarBodyType } from "src/app/models/enums/CarBodyType";
 import { CarService } from "src/app/services/car.service";
 
 @Component({
@@ -21,5 +22,13 @@ export class CarListComponent implements OnInit {
       this.loading = false;
       this.cars = result;
     });
+  }
+
+  getBodyType(bodyType: CarBodyType) {
+    if (bodyType === CarBodyType.Hatchback) {
+      return "Hatchback";
+    } else if (bodyType === CarBodyType.Sedan) {
+      return "Sedan";
+    }
   }
 }

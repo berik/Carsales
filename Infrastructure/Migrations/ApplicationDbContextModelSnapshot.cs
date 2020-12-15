@@ -91,15 +91,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = "4ab306a9-ff4c-46ca-a6f9-c47383d928d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c5c59a02-663b-4a45-b9dc-4d243589fb25",
+                            ConcurrencyStamp = "6c0f4400-275a-421b-9f5a-12148aed7cbb",
                             Email = "berik.assylbekov@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "BERIK.ASSYLBEKOV@GMAIL.COM",
                             NormalizedUserName = "BERIK.ASSYLBEKOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOK6gdEst6JKyt2GGgvBhzd29G41KdYufXQ82U3kAKrzSWms5IuMR6pPhybwlBYwJQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP0GjLchekS01t6tJnE+G42ydBSrnu6bMbn6Hfg5VkCJ/VqhTeLKB6WsuSWjWlfYDg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "65663bcf-ba1e-4f12-b251-6f23da810ba5",
+                            SecurityStamp = "7381c1b9-402b-40dc-8f32-c930ef138f60",
                             TwoFactorEnabled = false,
                             UserName = "berik.assylbekov@gmail.com"
                         });
@@ -118,10 +118,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
@@ -137,6 +133,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("OwnerId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(5,2)");
+
                     b.Property<int>("VehicleType")
                         .HasColumnType("int");
 
@@ -145,8 +144,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Vehicle");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Vehicle");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -387,6 +384,19 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Core.Entities.Boat", b =>
+                {
+                    b.HasBaseType("Core.Entities.Vehicle");
+
+                    b.Property<double>("LengthInMeter")
+                        .HasColumnType("float");
+
+                    b.Property<int>("NumberOfBerths")
+                        .HasColumnType("int");
+
+                    b.ToTable("Boats");
+                });
+
             modelBuilder.Entity("Core.Entities.Car", b =>
                 {
                     b.HasBaseType("Core.Entities.Vehicle");
@@ -403,32 +413,36 @@ namespace Infrastructure.Migrations
                     b.Property<int>("NumberOfWheels")
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("Car");
+                    b.ToTable("Cars");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2020, 12, 14, 17, 33, 43, 695, DateTimeKind.Local).AddTicks(9190),
+                            Created = new DateTime(2020, 12, 15, 17, 13, 20, 578, DateTimeKind.Local).AddTicks(610),
+                            CreatedBy = "4ab306a9-ff4c-46ca-a6f9-c47383d928d8",
                             Make = "BMW",
                             Model = "M5",
                             OwnerId = "4ab306a9-ff4c-46ca-a6f9-c47383d928d8",
+                            Price = 0m,
                             VehicleType = 0,
                             CarBodyType = 1,
-                            Engine = "c91dec43-bb4f-45b0-9bed-546f26845768",
+                            Engine = "412091fd-32a2-412e-96e3-8322bd3a7304",
                             NumberOfDoors = 5,
                             NumberOfWheels = 4
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2020, 12, 14, 17, 33, 43, 711, DateTimeKind.Local).AddTicks(3010),
+                            Created = new DateTime(2020, 12, 15, 17, 13, 20, 594, DateTimeKind.Local).AddTicks(6870),
+                            CreatedBy = "4ab306a9-ff4c-46ca-a6f9-c47383d928d8",
                             Make = "VW",
                             Model = "Passat",
                             OwnerId = "4ab306a9-ff4c-46ca-a6f9-c47383d928d8",
+                            Price = 0m,
                             VehicleType = 0,
                             CarBodyType = 0,
-                            Engine = "2cfa7ea4-1d5a-497e-a806-44c317e8ae4f",
+                            Engine = "267403fa-b0fd-435d-b958-d587b9d2dbd4",
                             NumberOfDoors = 5,
                             NumberOfWheels = 4
                         });
@@ -491,6 +505,24 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.Boat", b =>
+                {
+                    b.HasOne("Core.Entities.Vehicle", null)
+                        .WithOne()
+                        .HasForeignKey("Core.Entities.Boat", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.Car", b =>
+                {
+                    b.HasOne("Core.Entities.Vehicle", null)
+                        .WithOne()
+                        .HasForeignKey("Core.Entities.Car", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 

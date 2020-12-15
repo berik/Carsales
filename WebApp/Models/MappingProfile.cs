@@ -8,6 +8,8 @@ namespace WebApp.Models
         public MappingProfile()
         {
             CreateMap<Car, CarDto>();
+            CreateMap<NewCarDto, Car>();
+            
         }
     }
 }

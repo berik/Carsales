@@ -23,6 +23,7 @@ export class CarAddComponent implements OnInit {
     model: "",
     engine: "",
     price: "",
+    imageUri: "",
     carBodyType: 0,
     numberOfDoors: 5,
     numberOfWheels: 4,

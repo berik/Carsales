@@ -7,6 +7,6 @@
   <div class="card-body">
     <h5 class="card-title">{{ car.make }} {{ car.model }}</h5>
     <p class="card-text">${{ car.price }}</p>
-    <a [routerLink]="['car', car.id]" class="btn btn-primary">Details</a>
+    <a [routerLink]="[car.id]" class="btn btn-primary">Details</a>
   </div>
 </div>

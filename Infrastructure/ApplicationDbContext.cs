@@ -83,7 +83,7 @@ namespace Infrastructure
         
         private void ConfigureVehicle(EntityTypeBuilder<Vehicle> modelBuilder)
         {
-            modelBuilder.Property(a => a.Price).HasColumnType("decimal(5, 2)");
+            modelBuilder.Property(a => a.Price).HasColumnType("decimal(10, 2)");
         }
         private void ConfigureCar(EntityTypeBuilder<Car> modelBuilder)
         {

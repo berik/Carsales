@@ -6,6 +6,7 @@ export interface CarDto {
   created: string;
   make: string;
   model: string;
+  price: number;
   engine: string;
   numberOfDoors: number;
   numberOfWheels: number;
@@ -17,7 +18,9 @@ export interface NewCarDto {
   make: string;
   model: string;
   engine: string;
+  price: string;
   numberOfDoors: number;
   numberOfWheels: number;
   carBodyType: CarBodyType;
+  imageUri: string;
 }

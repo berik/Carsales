@@ -9,6 +9,7 @@ namespace WebApp.Models
         public DateTime Created { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
+        public string Price { get; set; }
         public VehicleType VehicleType { get; set; }
         public string Engine { get; set; }
         public int NumberOfDoors { get; set; }
@@ -21,6 +22,7 @@ namespace WebApp.Models
         public string Make { get; set; }
         public string Model { get; set; }
         public string Engine { get; set; }
+        public string Price { get; set; }
         public int NumberOfDoors { get; set; }
         public int NumberOfWheels { get; set; }
         public CarBodyType CarBodyType { get; set; }   

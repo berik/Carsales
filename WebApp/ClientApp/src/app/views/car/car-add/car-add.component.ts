@@ -22,6 +22,7 @@ export class CarAddComponent implements OnInit {
     make: "",
     model: "",
     engine: "",
+    price: "",
     carBodyType: 0,
     numberOfDoors: 5,
     numberOfWheels: 4,
@@ -30,11 +31,13 @@ export class CarAddComponent implements OnInit {
     { id: 0, value: "Hatchback" },
     { id: 1, value: "Sedan" },
   ];
+  previewImage: any;
   constructor(private router: Router, private carService: CarService) {}
 
   ngOnInit() {
     this.getCarMakes();
     this.initForm();
+    this.onValueChanges();
   }
 
   getCarMakes() {
@@ -50,6 +53,7 @@ export class CarAddComponent implements OnInit {
       carMake: new FormControl(null, Validators.required),
       carModel: new FormControl(null, Validators.required),
       carBodyType: new FormControl(null, Validators.required),
+      carPrice: new FormControl(null, Validators.required),
     });
   }
 
@@ -76,17 +80,36 @@ export class CarAddComponent implements OnInit {
       this.model.carBodyType = CarBodyType.Hatchback;
       this.model.numberOfDoors = 5;
     }
+  }
 
-    console.log(this.model);
+  onChangeCarPrice() {
+    let carPrice: string = this.carForm.get("carPrice").value;
+    this.model.price = carPrice;
+  }
+
+  onValueChanges(): void {
+    this.carForm.get("carPrice").valueChanges.subscribe((val) => {
+      this.model.price = val;
+    });
   }
 
   onSubmit() {
-    console.log(this.model);
     this.submitting = true;
 
     this.carService.addCar(this.model).subscribe(() => {
       this.submitting = false;
       this.router.navigate(["/car"]);
     });
+  }
+
+  onSelectFile(event) {
+    // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      this.model.imageUri = file;
+      const reader = new FileReader();
+      reader.onload = (e) => (this.previewImage = reader.result);
+      reader.readAsDataURL(file);
+    }
   }
 }
